@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:fontFamily="serif-monospace"
+        android:textColor="#673AB7" />
+
+    <TextView
+        android:id="@+id/tvYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Year"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/tvRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rating"
+        android:textSize="20sp"
+        android:textColor="#FF5722" />
+
+    <TextView
+        android:id="@+id/tvSinger"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="singer"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="#00BCD4" />
+</LinearLayout>

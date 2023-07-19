@@ -11,15 +11,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class List extends AppCompatActivity {
     ListView lvsongs;
     Button btnf,btnback;
-
     ArrayList<Song> alSong;
-    ArrayAdapter<Song> aaSong;
+    Spinner spnSongs;
+    CustomAdapter ca,ca2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,12 +30,14 @@ public class List extends AppCompatActivity {
         lvsongs=findViewById(R.id.lv);
         btnf=findViewById(R.id.btnfilter);
         btnback=findViewById(R.id.btnback);
+        spnSongs=findViewById(R.id.spinnerYear);
+
 
 
         DBHelper DBH=new DBHelper(List.this);
         alSong=DBH.getSongs();
-        aaSong= new ArrayAdapter(this, android.R.layout.simple_list_item_1, alSong);
-        lvsongs.setAdapter(aaSong);
+        ca = new CustomAdapter(this, R.layout.row, alSong);
+        lvsongs.setAdapter(ca);
         lvsongs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int
@@ -54,12 +59,15 @@ public class List extends AppCompatActivity {
                         fiveS.add(song);
 
                     }
-                    ArrayAdapter<Song> adapter=new ArrayAdapter<>(List.this, android.R.layout.simple_list_item_1, fiveS);
-                    lvsongs.setAdapter(adapter);
+                    ca2 =new CustomAdapter(List.this, R.layout.row, fiveS);
+                    lvsongs.setAdapter(ca2);
                 }
 
             }
         });
+
+
+
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

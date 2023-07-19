@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background"
     tools:context=".Edit">
 
     <TextView
@@ -13,13 +14,13 @@
         android:layout_height="wrap_content"
         android:text="Song ID" />
 
-    <EditText
-        android:id="@+id/etID"
+    <TextView
+        android:id="@+id/tvSID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:hint="Enter Song ID"
+
         />
 
     <TextView

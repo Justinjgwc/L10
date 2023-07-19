@@ -1,6 +1,5 @@
 package sg.edu.rp.c346.id22012433.ndp;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,37 +10,58 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class Edit extends AppCompatActivity {
-    EditText etID,etST2,etS2,etY2;
-    Button btnC,btnU,btnD;
+    EditText etST2, etS2, etY2;
+    TextView tvSID;
+    Button btnC, btnU, btnD;
     RadioGroup RG;
-    RadioButton rb1,rb2,rb3,rb4,rb5;
+    RadioButton rb1, rb2, rb3, rb4, rb5;
     Song songe;
-    int stars=0;
+    int stars = 0;
+
     @Override
     protected void onPause() {
         super.onPause();
+
         //Step 1a: Get the user input from the EditText and store it in a variable
-        Integer ID= Integer.valueOf((etID.getText().toString()));
-        String ST=etST2.getText().toString();
-        String S=etS2.getText().toString();
-        Integer Y= Integer.valueOf((etY2.getText().toString()));
-        Integer SR=Integer.valueOf(stars);
+        Integer ID = Integer.valueOf(tvSID.getText().toString());
+        String ST = etST2.getText().toString();
+        String S = etS2.getText().toString();
+        String YString = etY2.getText().toString();
+        Integer Y;
+        if (!YString.isEmpty()) {
+            try {
+                Y = Integer.valueOf(YString);
+            } catch (NumberFormatException e) {
+                // Handle the case when the input is not a valid integer (non-numeric)
+                Toast.makeText(this, "Please enter a valid year.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } else {
+            // Handle the case when the input is empty
+            // You can set a default value or show an error message
+            Y = 0; // or any other default value you want to set
+        }
+
+        Integer SR = stars;
         //Step 1b: Obtain an instance of the SharedPreferences
-        SharedPreferences prefs=getPreferences(MODE_PRIVATE);
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
         //Step 1c: Obtain an instance of the SharedPreferences Editor for update later
-        SharedPreferences.Editor prefEdit= prefs.edit();
+        SharedPreferences.Editor prefEdit = prefs.edit();
         //Step 1d: Set a key-value pair in the editor
         prefEdit.putInt("ID", ID);
-        prefEdit.putString("Song Title",ST );
-        prefEdit.putString("Singer",S);
+        prefEdit.putString("Song Title", ST);
+        prefEdit.putString("Singer", S);
         prefEdit.putInt("Year", Y);
-        prefEdit.putInt("Star",SR);
+        prefEdit.putInt("Star", SR);
 
         //Step 1e:Call commit() to save the changes made to the SharedPreference
         prefEdit.commit();
     }
+
 
     @Override
     protected void onResume() {
@@ -55,7 +75,7 @@ public class Edit extends AppCompatActivity {
         Integer Y = prefs.getInt("Year", songe.getYear());
         Integer SR = prefs.getInt("Star", songe.getStars());
         //with a default value if no matching data
-        etID.setHint(String.valueOf(ID));
+        tvSID.setHint(String.valueOf(ID));
         etST2.setText(ST);
         etS2.setText(S);
         etY2.setText(String.valueOf(Y));
@@ -80,7 +100,7 @@ public class Edit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-        etID=findViewById(R.id.etID);
+        tvSID=findViewById(R.id.tvSID);
         etST2=findViewById(R.id.etSongTitle2);
         etS2=findViewById(R.id.etSingers2);
         etY2=findViewById(R.id.etYear2);
@@ -125,6 +145,7 @@ public class Edit extends AppCompatActivity {
             public void onClick(View v) {
                 DBHelper dbh = new DBHelper(Edit.this);
                 dbh.deleteSong(songe.getId());
+
                 Intent i=new Intent(Edit.this,List.class);
                 startActivity(i);
             }
